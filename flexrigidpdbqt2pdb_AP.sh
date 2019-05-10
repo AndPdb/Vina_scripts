@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# flexrigidpdbqt2pdb.sh_revAP
+# flexrigidpdbqt2pdb.sh_revAP - version modified in order to run the script from command line $<script_name> <rigid_name> <flex_name> <lig_name> <outdir>
 
 # ProSciens, Computing & Molecular Sciences
 # http://www.prosciens.com/
