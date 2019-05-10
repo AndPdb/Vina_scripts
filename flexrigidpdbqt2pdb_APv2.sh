@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# flexrigidpdbqt2pdb.sh_revAP
+# flexrigidpdbqt2pdb.sh_revAPv2 - version for ligand identified with ATOM (instead of HETATM)
 
 # ProSciens, Computing & Molecular Sciences
 # http://www.prosciens.com/
@@ -102,6 +102,7 @@ cp $RIGIDPDBQT.pdb ${RIGIDPDBQT}_${LIGNAME}_${MODEL}_apo.pdb
 ###  Let's merge the files
 
 # 1. First we clean up the model PDB and we divide the flex res and the ligand
+#  Modified grep HETATM just in case the ligand is identified with ATOM
 
 grep ATOM ${FLEXPDBQT}_${MODEL}.pdb > ${FLEXPDBQT}_${MODEL}.pdb.tmp
 ##grep HETATM ${FLEXPDBQT}_${MODEL}.pdb > ${LIGNAME}_${MODEL}.pdb.tmp
