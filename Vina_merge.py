@@ -4,6 +4,8 @@
 Created on Thu Jul 18 11:26:39 2019
 
 @author: Andrea Pasquadibisceglie
+
+This script merges the output PDBQT and the rigid input PDBQT derived from Flexible Docking Simulation with AutoDock Vina
 """
 from io import StringIO
 import subprocess
