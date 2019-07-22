@@ -20,7 +20,7 @@ utilities24 = "{0}MGLToolsPckgs/AutoDockTools/Utilities24/".format(MGLTOOLSDIR)
 pythonsh = '{0}bin/pythonsh'.format(MGLTOOLSDIR)
 
 
-#command line parsing#
+#COMMAND LINE PARSING#
 parser = argparse.ArgumentParser(prog='Vina_merge', usage='%(prog)s [options]')
 
 Input = parser.add_argument_group('Input')
