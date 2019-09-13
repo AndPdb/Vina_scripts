@@ -5,7 +5,7 @@ Created on Thu Jul 18 11:26:39 2019
 
 @author: Andrea Pasquadibisceglie
 
-This script merges the output PDBQT and the rigid input PDBQT derived from Flexible Docking Simulation with AutoDock Vina
+This script merges the output PDBQT and the rigid input PDBQT derived from Flexible Docking Simulation with AutoDock Vina, producing a PDB file called "merge.pdb" in the output directory.
 """
 from io import StringIO
 import subprocess
@@ -15,7 +15,7 @@ import os
 
 ###SOME PATHS###
 #mgltools directory path
-MGLTOOLSDIR = "/home/user/mgltools_x86_64Linux2_1.5.7rc1/"
+MGLTOOLSDIR = "/home/andrea/Programs/mgltools_x86_64Linux2_1.5.7rc1/"
 
 #path for utilities and pythonsh of mgltools. In linux OS these should be the same
 utilities24 = "{0}MGLToolsPckgs/AutoDockTools/Utilities24/".format(MGLTOOLSDIR)
@@ -39,10 +39,11 @@ args = parser.parse_args()
 #REQUIRED VALUES#
 rigid=args.rigid
 poses=args.poses
+nm_poses=os.path.basename(poses)
 
 #DEFAULT VALUES#
 if args.worDir is None:
-    worDir=os.path.dirname(args.poses)
+    worDir=os.path.dirname(args.poses)+"/"
 else:
     worDir=args.worDir
 
@@ -70,7 +71,7 @@ with open (poses, "r") as fi:
             model_n = l.split()[0] + l.split()[1]
             j=i #remember starting position
             #extract pose n
-            with open (worDir+model_n+".pdbqt", "w") as model:
+            with open ("{0}{1}_{2}.pdbqt".format(worDir,nm_poses,model_n), "w") as model:
                 for k in range(j, len(lines)):
                     if lines[k].startswith("ENDMDL") == False:
                         model.write(lines[k])
@@ -126,14 +127,15 @@ for line in (merge.getvalue()).split("\n"):
     #check if the atom number is correct
     elif line.startswith("ATOM") and int(line.split()[1])!=(atnum+1):
         #replace the substring using 5 position aligned on left
-        newline = line.replace("{0:>5}".format(line.split()[1]),
-                               "{0:>5}".format(str(atnum+1)))
+        newline = line[:6] + "{0:>5}".format(str(atnum+1)) + line[11:]
+#        newline = line.replace("{0:>5}".format(line.split()[1]),
+#                               "{0:>5}".format(str(atnum+1)))
         remerge.write(newline+"\n")
         atnum = atnum+1
     else:
         remerge.write(line+"\n")
 
 ###(7)WRITE MERGED FILE###
-with open (outDir+"merge.pdb", "w") as fo:
+with open ("{0}{1}_merge.pdb".format(outDir,nm_poses), "w") as fo:
     cont = remerge.getvalue()
     fo.write(cont)
